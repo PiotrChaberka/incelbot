@@ -11,7 +11,8 @@ model_name = 'gpt2'
 model = GPT2LMHeadModel.from_pretrained(model_name)
 tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 
-# Scrape data from 4chan /b/ boardI
+# Scrape data from 4chan /b/ board
+# If you want to edit it just change the url variable. It SHOULD work
 url = 'https://boards.4chan.org/b/'
 response = requests.get(url)
 soup = BeautifulSoup(response.text, 'html.parser')
@@ -39,7 +40,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Write a sentence you want completed :)")
 input_text = input("") + " " + completion
 input_ids = tokenizer.encode(input_text, return_tensors='pt').to(device)
-output = model.generate(input_ids, max_length=50, num_return_sequences=1)
+output = model.generate(input_ids, max_length=35, num_return_sequences=1)
 
 # Decode the generated completion
 generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
